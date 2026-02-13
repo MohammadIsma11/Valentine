@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Gift...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+
+        /* Efek Masuk Halaman */
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+/* Animasi Fade Out saat pindah halaman */
+.fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.5s ease-in-out;
+}
+
+        body { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 450px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        /* Loader Modern */
+        .loader { 
+            border: 6px solid #f3f3f3; 
+            border-top: 6px solid #ff4d6d; 
+            border-radius: 50%; 
+            width: 60px; 
+            height: 60px; 
+            animation: spin 1s linear infinite; 
+            margin: 0 auto 20px;
+        }
+
+        #status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #d63384;
+            min-height: 1.2rem;
+        }
+
+        .error-msg {
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e03f5e;
+            transform: scale(1.05);
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-content">
+        <div class="loader" id="loader"></div>
+        <p id="status">Menginisialisasi transfer hadiah...</p>
+    </div>
+
+    <script>
+       window.onload = () => {
+    // Penjaga Alur: Jika coba langsung buka tanpa index, tendang balik
+    if (!sessionStorage.getItem('surprisedStarted')) {
+        window.location.href = 'index.html';
+        return;
+    }
+    document.body.classList.add('loaded');
+};
+
+function goToNextPage(targetFile) {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+        window.location.href = targetFile;
+    }, 500);
+}
+        const status = document.getElementById('status');
+        const container = document.getElementById('main-content');
+        
+        // Alur status loading
+        setTimeout(() => { status.innerText = "> Menghubungkan ke API Bank Bojonegoro..."; }, 1500);
+        setTimeout(() => { status.innerText = "> Mencoba transfer Rp 10.000.000..."; }, 3000);
+        setTimeout(() => { status.innerText = "> ERROR: Autentikasi Dompet Ismail Gagal!"; }, 4500);
+
+        // Munculkan pesan error prank
+        setTimeout(() => { 
+            container.innerHTML = `
+                <div class="error-msg">⚠️ ERROR 404: DOMPET KOSONG!</div>
+                <p style="color: #555;">Duh sayang, saldo admin ISMI Smart Digital lagi limit nih... Tapi tenang, aku ada cadangan hadiah yang jauh lebih manis!</p>
+                <button onclick="goToNextPage('chocolate_prank.html')">Cek Hadiah Cadangan</button>
+            `;
+        }, 6000);
+    </script>
+</body>
+</html>

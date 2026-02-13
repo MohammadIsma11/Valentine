@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ada Hadiah Buat Kamu!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Desain Background Gradient dan Font Modern */
+
+        /* Efek Masuk Halaman */
+body {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+/* Animasi Fade Out saat pindah halaman */
+.fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.5s ease-in-out;
+}
+        body { 
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container dengan Animasi Fade-In */
+        .container { 
+            text-align: center; 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 40px; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2); 
+            max-width: 400px;
+            animation: fadeIn 1.5s ease-out;
+            border: 2px solid #fff;
+            z-index: 10;
+        }
+
+        h2 { 
+            font-family: 'Dancing Script', cursive; 
+            color: #d63384; 
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p { color: #555; font-weight: 500; }
+
+        /* Tombol dengan Efek Shadow dan Transisi Halus */
+        #btn-no { 
+            position: absolute; 
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            padding: 12px 25px; 
+            background: #ff4d6d; 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hiasan Tambahan agar terlihat Profesional */
+        .brand {
+            position: fixed;
+            bottom: 20px;
+            font-size: 0.8rem;
+            color: #d63384;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hai Sayang! 💖</h2>
+        <p>Aku punya sesuatu yang spesial buat kamu, coba klik tombol di bawah ini ya:</p>
+        <button id="btn-no" onmouseover="moveButton()">Ambil Hadiah</button>
+    </div>
+
+    <div class="brand">Powered by ISMI Smart Digital</div>
+
+    <script>
+        window.onload = () => {
+    // Menandai sesi mulai dari awal
+    sessionStorage.setItem('surprisedStarted', 'true');
+    document.body.classList.add('loaded');
+};
+
+function next() {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+        window.location.href = 'page2.html';
+    }, 500);
+}
+        function moveButton() {
+            // Batasan agar tombol tidak keluar layar
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 100);
+            const btn = document.getElementById('btn-no');
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // Prank: Setelah 8 detik, tombolnya menyerah
+        setTimeout(() => {
+            const btn = document.getElementById('btn-no');
+            btn.onmouseover = null;
+            btn.innerText = "Oke, klik aku sekarang! ✨";
+            
+            // Redirect ke file selanjutnya sesuai urutan kita
+            btn.onclick = () => { window.location.href = 'page2.html'; };
+            
+            btn.style.position = "static";
+            btn.style.marginTop = "20px";
+            btn.style.background = "#28a745"; // Berubah hijau saat sudah bisa diklik
+        }, 8000);
+    </script>
+</body>
+</html>
